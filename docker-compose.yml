@@ -13,6 +13,14 @@ services:
       - /usr/src/app/node_modules
     environment:
       - NODE_ENV=development
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=root_password
+      - DB_DATABASE=catalogo_produtos
+    depends_on:
+      - db
+
   db:
     image: mysql:5.7
     container_name: mysql_db
