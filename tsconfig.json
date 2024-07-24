@@ -19,6 +19,6 @@
     "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src", "test", "ormconfig.test.ts"],
+  "include": ["src", "test", "ormconfig.test.ts", "modules"],
   "exclude": ["node_modules", "dist"]
 }
