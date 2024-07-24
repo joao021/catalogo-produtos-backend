@@ -13,6 +13,7 @@ services:
       - /usr/src/app/node_modules
     environment:
       - NODE_ENV=development
+      - IS_DOCKER=true
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USERNAME=root
