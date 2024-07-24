@@ -50,7 +50,7 @@ jobs:
         run: npx npm-force-resolutions
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Run linter
         run: npm run lint
