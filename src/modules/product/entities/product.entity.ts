@@ -11,9 +11,21 @@ export class Product {
   @Column()
   description!: string;
 
-  @Column()
-  price!: number;
+  @Column('decimal', { precision: 10, scale: 2 })
+  price12Months!: number;
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  price6Months!: number;
+
+  @Column('decimal', { precision: 10, scale: 2 })
+  price3Months!: number;
 
   @Column()
-  imageUrl!: string;
+  imageUrlFront!: string;
+
+  @Column()
+  imageUrlSide!: string;
+
+  @Column()
+  imageUrlBack!: string;
 }

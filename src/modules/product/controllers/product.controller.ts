@@ -1,4 +1,10 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { ProductService } from '../services/product.service';
 
@@ -7,8 +13,14 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  async findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ): Promise<Product[]> {
+    if (page < 1 || limit < 1) {
+      throw new BadRequestException('Page and limit must be positive numbers');
+    }
+    return this.productService.findAll(page, limit);
   }
 
   @Get(':id')

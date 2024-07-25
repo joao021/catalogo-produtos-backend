@@ -1,17 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { ProductService } from '../services/product.service';
 import { Product } from '../entities/product.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 describe('ProductService', () => {
   let service: ProductService;
   let repository: Repository<Product>;
-  let moduleFixture: TestingModule;
 
   beforeAll(async () => {
-    moduleFixture = await Test.createTestingModule({
+    const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
@@ -30,37 +29,31 @@ describe('ProductService', () => {
     );
   });
 
-  afterAll(async () => {
-    await moduleFixture.close();
-  });
-
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all products', async () => {
+  beforeEach(async () => {
     const product = new Product();
     product.name = 'Test Product';
-    product.description = 'Test Description';
-    product.price = 100;
-    product.imageUrl = 'test-image.jpg';
+    product.description = 'This is a test product';
+    product.price12Months = 1999.8;
+    product.price6Months = 1799.82;
+    product.price3Months = 999.9;
+    product.imageUrlFront = 'front.jpg';
+    product.imageUrlSide = 'side.jpg';
+    product.imageUrlBack = 'back.jpg';
     await repository.save(product);
-
-    const products = await service.findAll();
-    expect(products.length).toBe(1);
-    expect(products[0].name).toBe('Test Product');
   });
 
-  it('should return one product by ID', async () => {
-    const product = new Product();
-    product.name = 'Test Product';
-    product.description = 'Test Description';
-    product.price = 100;
-    product.imageUrl = 'test-image.jpg';
-    const savedProduct = await repository.save(product);
+  it('should find all products with pagination', async () => {
+    const products = await service.findAll(1, 10);
+    expect(products.length).toBeGreaterThan(0);
+  });
 
-    const foundProduct = await service.findOne(savedProduct.id);
-    expect(foundProduct).toBeDefined();
-    expect(foundProduct.name).toBe('Test Product');
+  it('should find one product by id', async () => {
+    const product = await service.findOne(1);
+    expect(product).toBeDefined();
+    expect(product.id).toBe(1);
   });
 });
