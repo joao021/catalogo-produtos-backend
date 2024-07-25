@@ -18,7 +18,7 @@ export class ProductService {
     if (page < 1 || limit < 1) {
       throw new BadRequestException('Page and limit must be positive numbers');
     }
-    const [result, total] = await this.productRepository.findAndCount({
+    const [result] = await this.productRepository.findAndCount({
       take: limit,
       skip: (page - 1) * limit,
     });

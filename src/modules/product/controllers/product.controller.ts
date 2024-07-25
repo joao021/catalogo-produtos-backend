@@ -14,8 +14,8 @@ export class ProductController {
 
   @Get()
   async findAll(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
   ): Promise<Product[]> {
     if (page < 1 || limit < 1) {
       throw new BadRequestException('Page and limit must be positive numbers');

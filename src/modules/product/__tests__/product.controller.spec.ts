@@ -4,10 +4,9 @@ import { ProductService } from '../services/product.service';
 
 describe('ProductController', () => {
   let controller: ProductController;
-  let service: ProductService;
 
   const mockProductService = {
-    findAll: jest.fn().mockImplementation((page: number, limit: number) => {
+    findAll: jest.fn().mockImplementation(() => {
       return Promise.resolve([
         {
           id: 1,
@@ -42,7 +41,6 @@ describe('ProductController', () => {
     }).compile();
 
     controller = module.get<ProductController>(ProductController);
-    service = module.get<ProductService>(ProductService);
   });
 
   it('should be defined', () => {
