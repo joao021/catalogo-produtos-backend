@@ -1,4 +1,4 @@
-FROM node:20.12.2
+FROM node:16-alpine
 
 WORKDIR /usr/src/app
 
@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-RUN yarn build
-
 EXPOSE 3001
 
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:dev"]
